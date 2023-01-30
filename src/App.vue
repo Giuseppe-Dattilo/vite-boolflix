@@ -3,11 +3,12 @@ import { api } from './data';
 import axios from 'axios';
 import { store } from './data/store';
 import SearchBar from './components/SearchBar.vue';
-import ProductionCard from './components/productions/productionCard.vue';
 import Loader from './components/Loader.vue';
+import AppMain from './components/AppMain.vue';
+import AppHeader from './components/AppHeader.vue';
 export default {
   name: 'Boolflix',
-  components: { SearchBar, ProductionCard, Loader },
+  components: { SearchBar, Loader, AppMain, AppHeader },
   data() {
     return {
       store,
@@ -56,25 +57,8 @@ export default {
 
 <template>
   <loader v-if="store.isLoading"></loader>
-  <header>
-    <search-bar placeholder="cerca..." @term-change="updateTitleFilter" @form-submit="searchProductions"></search-bar>
-  </header>
-
-  <main>
-
-    <!-- Movies features  -->
-    <section>
-      <production-card v-for="movie in store.movies" :key="movie.id" :element="movie"></production-card>
-    </section>
-
-    <!-- Series features  -->
-    <section>
-      <production-card v-for="serie in store.series" :key="serie.id" :element="serie"></production-card>
-      <!-- <font-awesome-icon icon="fa-solid fa-star" />
-      <font-awesome-icon icon="fa-regular fa-star" /> -->
-    </section>
-  </main>
-
+  <app-header @update-title="updateTitleFilter" @search-title="searchProductions"></app-header>
+  <app-main></app-main>
 </template>
  
 
